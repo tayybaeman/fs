@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Amazing Friend 💛</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff6b9d;
+            --secondary: #ffd93d;
+            --accent: #6bcf7f;
+            --bg-start: #fff5e4;
+            --bg-end: #ffecd6;
+            --text: #2d3436;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            perspective: 1000px;
+        }
+
+        .stage {
+            background: white;
+            border-radius: 30px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(255, 107, 157, 0.2);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .stage::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .step {
+            display: none;
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .text-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, #ff8fab 100%);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.1rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .action-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.5);
+        }
+
+        .action-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .gift-box {
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.05);
+        }
+
+        .gift-base {
+            width: 180px;
+            height: 140px;
+            background: linear-gradient(135deg, var(--primary) 0%, #ff8fab 100%);
+            border-radius: 10px;
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        .gift-lid {
+            width: 200px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff8fab 0%, var(--primary) 100%);
+            border-radius: 10px;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+            transition: transform 0.6s ease, opacity 0.6s ease;
+        }
+
+        .gift-box.opened .gift-lid {
+            transform: translateY(-100px) rotateX(45deg);
+            opacity: 0;
+        }
+
+        .ribbon-v {
+            width: 20px;
+            height: 180px;
+            background: var(--secondary);
+            position: absolute;
+            left: 90px;
+            top: 40px;
+        }
+
+        .ribbon-h {
+            width: 200px;
+            height: 20px;
+            background: var(--secondary);
+            position: absolute;
+            left: 0;
+            top: 90px;
+        }
+
+        .bow {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            top: 0;
+            left: 70px;
+        }
+
+        .bow::before,
+        .bow::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background: var(--secondary);
+            border-radius: 50% 50% 0 50%;
+        }
+
+        .bow::before {
+            left: 0;
+            transform: rotate(-45deg);
+        }
+
+        .bow::after {
+            right: 0;
+            transform: rotate(45deg);
+        }
+
+        .gift-content {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            font-size: 3rem;
+            transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+        }
+
+        .gift-box.opened .gift-content {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-20px);
+        }
+
+        .floating-hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 4s ease-in infinite;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .music-player {
+            background: linear-gradient(135deg, var(--accent) 0%, #5ab86f 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(107, 207, 127, 0.3);
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .music-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .play-btn {
+            background: white;
+            color: var(--accent);
+            border: none;
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .wave-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            height: 40px;
+            margin-top: 15px;
+        }
+
+        .wave-bar {
+            width: 5px;
+            background: white;
+            border-radius: 10px;
+            animation: wave 1s ease-in-out infinite;
+        }
+
+        .wave-bar:nth-child(1) { height: 10px; animation-delay: 0s; }
+        .wave-bar:nth-child(2) { height: 20px; animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { height: 30px; animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { height: 25px; animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { height: 35px; animation-delay: 0.4s; }
+        .wave-bar:nth-child(6) { height: 20px; animation-delay: 0.5s; }
+        .wave-bar:nth-child(7) { height: 30px; animation-delay: 0.6s; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.5); }
+        }
+
+        .polaroid {
+            background: white;
+            padding: 15px;
+            padding-bottom: 50px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transform: rotate(-3deg);
+            margin: 30px auto;
+            max-width: 300px;
+            animation: polaroidDrop 0.8s ease-out;
+        }
+
+        @keyframes polaroidDrop {
+            from {
+                opacity: 0;
+                transform: translateY(-100px) rotate(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotate(-3deg);
+            }
+        }
+
+        .polaroid-text {
+            text-align: center;
+            margin-top: 15px;
+            font-family: 'Playfair Display', serif;
+            color: var(--text);
+            font-size: 1.2rem;
+        }
+
+        .emoji-large {
+            font-size: 6rem;
+            text-align: center;
+            margin: 20px 0;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .confetti {
+            position: fixed;
+            top: -10px;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            animation: confettiFall 3s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .message-card {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1) 0%, rgba(255, 217, 61, 0.1) 100%);
+            border-left: 5px solid var(--primary);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: sparkleAnim 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkleAnim {
+            0%, 100% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stage {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .text-content {
+                font-size: 1rem;
+            }
+
+            .action-btn {
+                padding: 15px 35px;
+                font-size: 1rem;
+            }
+
+            .gift-box {
+                width: 150px;
+                height: 150px;
+            }
+
+            .gift-base {
+                width: 135px;
+                height: 105px;
+            }
+
+            .gift-lid {
+                width: 150px;
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="heartsContainer"></div>
+    
+    <div class="container">
+        <div class="stage">
+            <div class="content">
+                <!-- Step 1: Welcome -->
+                <div class="step active" id="step1">
+                    <h1>Hey There, أنت صديق ✨</h1>
+                    <div class="text-content">
+                        <p>I made something special just for you...</p>
+                        <p>Click the button to begin this little journey!</p>
+                    </div>
+                    <div class="button-container">
+                        <button class="action-btn" onclick="nextStep(2)">
+                            Start the Journey 🚀
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Gift Box -->
+                <div class="step" id="step2">
+                    <h1>A Little Surprise 🎁</h1>
+                    <div class="text-content">
+                        <p>Click on the gift box below to open it!</p>
+                    </div>
+                    <div class="gift-box" id="giftBox" onclick="openGift()">
+                        <div class="bow"></div>
+                        <div class="gift-lid"></div>
+                        <div class="ribbon-v"></div>
+                        <div class="ribbon-h"></div>
+                        <div class="gift-base"></div>
+                        <div class="gift-content">🎊</div>
+                    </div>
+                    <div class="button-container" style="display: none;" id="afterGiftBtn">
+                        <button class="action-btn" onclick="nextStep(3)">
+                            Continue 💫
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Special Message -->
+                <div class="step" id="step3">
+                    <h1>You Are MY best friend ! 🌟</h1>
+                    <div class="emoji-large">🤗</div>
+                    <div class="message-card">
+                        <div class="text-content">
+                            Having you as a friend is like having sunshine on a rainy day. Your smile lights up the room, your laugh is contagious, and your kindness makes the world a better place!
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <button class="action-btn" onclick="nextStep(4)">
+                            Next Surprise 🎵
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Music Player -->
+                <div class="step" id="step4">
+                    <h1>Our Special Melody 🎶</h1>
+                    <div class="text-content">
+                        <p>Press play for a song that reminds me of our friendship!</p>
+                    </div>
+                    <div class="music-player">
+                        <div class="music-title">♫ Best Friend Forever ♫</div>
+                        <button class="play-btn" id="playBtn" onclick="toggleMusic()">
+                            ▶️ Play Music
+                        </button>
+                        <div class="wave-container" id="waveContainer" style="display: none;">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <button class="action-btn" onclick="nextStep(5)">
+                            Keep Going 🌈
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Memory -->
+                <div class="step" id="step5">
+                    <h1>Remember When... 📸</h1>
+                    <div class="polaroid">
+                        <div class="emoji-large" style="margin: 0;">🌅</div>
+                        <div class="polaroid-text">All our amazing memories together!</div>
+                    </div>
+                    <div class="text-content">
+                        Every moment with you becomes a cherished memory. From late-night talks to spontaneous adventures, you make life so much more fun!
+                    </div>
+                    <div class="button-container">
+                        <button class="action-btn" onclick="nextStep(6)">
+                            Almost There 💝
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 6: Final Message -->
+                <div class="step" id="step6">
+                    <h1>Thank You for Being You! 💖</h1>
+                    <div class="emoji-large">🌺</div>
+                    <div class="message-card">
+                        <div class="text-content">
+                            Friendship isn't about who you've known the longest. It's about who walked into your life, said "I'm here for you," and proved it. That's YOU! Thank you for being the most amazing friend anyone could ask for. You're not just my friend - you're family! 💛
+                        </div>
+                    </div>
+                    <div class="text-content" style="margin-top: 30px;">
+                        <strong>Never forget how special you are!</strong> 🌟✨🎉
+                    </div>
+                    <div class="button-container">
+                        <!-- <button class="action-btn" onclick="createHearts()">
+                            Celebrate! 🎊
+                        </button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let currentStep = 1;
+        let musicPlaying = false;
+
+        function nextStep(step) {
+            // Hide current step
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            
+            // Show next step
+            currentStep = step;
+            document.getElementById(`step${step}`).classList.add('active');
+
+            // Add sparkles animation
+            createSparkles();
+        }
+
+        function openGift() {
+            const giftBox = document.getElementById('giftBox');
+            if (!giftBox.classList.contains('opened')) {
+                giftBox.classList.add('opened');
+                
+                // Show confetti
+                createConfetti();
+                
+                // Show next button after animation
+                setTimeout(() => {
+                    document.getElementById('afterGiftBtn').style.display = 'flex';
+                }, 800);
+            }
+        }
+
+        function toggleMusic() {
+            const audio = document.getElementById('backgroundMusic');
+            const playBtn = document.getElementById('playBtn');
+            const waveContainer = document.getElementById('waveContainer');
+            
+            if (musicPlaying) {
+                audio.pause();
+                playBtn.innerHTML = '▶️ Play Music';
+                waveContainer.style.display = 'none';
+                musicPlaying = false;
+            } else {
+                audio.play();
+                playBtn.innerHTML = '⏸️ Pause Music';
+                waveContainer.style.display = 'flex';
+                musicPlaying = true;
+            }
+        }
+
+        function createHearts() {
+            const container = document.getElementById('heartsContainer');
+            const hearts = ['💖', '💕', '💗', '💓', '💝'];
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    container.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 4000);
+                }, i * 200);
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#ff6b9d', '#ffd93d', '#6bcf7f', '#a29bfe', '#fd79a8'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 1 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        function createSparkles() {
+            const container = document.querySelector('.stage');
+            for (let i = 0; i < 5; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+                container.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 2000);
+            }
+        }
+
+        // Initial sparkles on load
+        window.addEventListener('load', () => {
+            createSparkles();
+        });
+    </script>
+</body>
+</html>
